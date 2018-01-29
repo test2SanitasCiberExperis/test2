@@ -4,7 +4,6 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.concurrent.ExecutionException;
-import java.util.regex.Pattern;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +14,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.mycorp.constant.Constants;
 import com.mycorp.support.Ticket;
 import com.ning.http.client.AsyncCompletionHandler;
 import com.ning.http.client.AsyncHttpClient;
@@ -26,7 +26,6 @@ import com.ning.http.client.Response;
 import com.ning.http.client.uri.Uri;
 
 public class Zendesk implements Closeable {
-    private static final String JSON = "application/json; charset=UTF-8";
     private final boolean closeClient;
     private final AsyncHttpClient client;
     private final Realm realm;
@@ -36,7 +35,6 @@ public class Zendesk implements Closeable {
     private final Logger logger;
     private boolean closed = false;
 
-
     private Zendesk(AsyncHttpClient client, String url, String username, String password) {
         this.logger = LoggerFactory.getLogger(Zendesk.class);
         this.closeClient = client == null;
@@ -44,12 +42,8 @@ public class Zendesk implements Closeable {
         this.client = client == null ? new AsyncHttpClient() : client;
         this.url = url.endsWith("/") ? url + "api/v2" : url + "/api/v2";
         if (username != null) {
-            this.realm = new Realm.RealmBuilder()
-                    .setScheme(Realm.AuthScheme.BASIC)
-                    .setPrincipal(username)
-                    .setPassword(password)
-                    .setUsePreemptiveAuth(true)
-                    .build();
+            this.realm = new Realm.RealmBuilder().setScheme(Realm.AuthScheme.BASIC).setPrincipal(username)
+                    .setPassword(password).setUsePreemptiveAuth(true).build();
         } else {
             if (password != null) {
                 throw new IllegalStateException("Cannot specify token or password without specifying username");
@@ -60,20 +54,20 @@ public class Zendesk implements Closeable {
     }
 
     public Ticket createTicket(Ticket ticket) {
-        return complete(submit(req("POST", cnst("/tickets.json"),
-                        JSON, json(Collections.singletonMap("ticket", ticket))),
-                handle(Ticket.class, "ticket")));
+        return complete(submit(
+                req("POST", cnst("/tickets.json"), Constants.JSON,
+                        json(Collections.singletonMap(Constants.LITERAL_TICKET, ticket))),
+                handle(Ticket.class, Constants.LITERAL_TICKET)));
     }
 
     private byte[] json(Object object) {
         try {
             return mapper.writeValueAsBytes(object);
-        } catch (JsonProcessingException e) {
+        }
+        catch (JsonProcessingException e) {
             throw new ZendeskException(e.getMessage(), e);
         }
     }
-
-    private static final Pattern RESTRICTED_PATTERN = Pattern.compile("%2B", Pattern.LITERAL);
 
     private Request req(String method, Uri template, String contentType, byte[] body) {
         RequestBuilder builder = new RequestBuilder(method);
@@ -82,7 +76,8 @@ public class Zendesk implements Closeable {
         } else {
             builder.addHeader("Authorization", "Bearer " + oauthToken);
         }
-        builder.setUrl(RESTRICTED_PATTERN.matcher(template.toString()).replaceAll("+")); //replace out %2B with + due to API restriction
+        // replace out %2B with + due to API restriction
+        builder.setUrl(Constants.RESTRICTED_PATTERN.matcher(template.toString()).replaceAll("+"));
         builder.addHeader("Content-type", contentType);
         builder.setBody(body);
         return builder.build();
@@ -110,8 +105,8 @@ public class Zendesk implements Closeable {
             if (request.getStringData() != null) {
                 logger.debug("Request {} {}\n{}", request.getMethod(), request.getUrl(), request.getStringData());
             } else if (request.getByteData() != null) {
-                logger.debug("Request {} {} {} {} bytes", request.getMethod(), request.getUrl(),
-                        request.getHeaders().getFirstValue("Content-type"), request.getByteData().length);
+                logger.debug("Request {} {} {} {} bytes", request.getMethod(), request.getUrl(), request.getHeaders()
+                        .getFirstValue("Content-type"), request.getByteData().length);
             } else {
                 logger.debug("Request {} {}", request.getMethod(), request.getUrl());
             }
@@ -133,10 +128,10 @@ public class Zendesk implements Closeable {
         return response.getStatusCode() == 429;
     }
 
-    protected <T> ZendeskAsyncCompletionHandler<T> handle(final Class<T> clazz, final String name, final Class... typeParams) {
+    protected <T> ZendeskAsyncCompletionHandler<T> handle(final Class<T> clazz, final String name,
+            final Class... typeParams) {
         return new BasicAsyncCompletionHandler<T>(clazz, name, typeParams);
     }
-
 
     private class BasicAsyncCompletionHandler<T> extends ZendeskAsyncCompletionHandler<T> {
         private final Class<T> clazz;
@@ -168,7 +163,6 @@ public class Zendesk implements Closeable {
         }
     }
 
-
     private static abstract class ZendeskAsyncCompletionHandler<T> extends AsyncCompletionHandler<T> {
         @Override
         public void onThrowable(Throwable t) {
@@ -180,10 +174,9 @@ public class Zendesk implements Closeable {
         }
     }
 
-
-    //////////////////////////////////////////////////////////////////////
+    // ////////////////////////////////////////////////////////////////////
     // Closeable interface methods
-    //////////////////////////////////////////////////////////////////////
+    // ////////////////////////////////////////////////////////////////////
 
     public boolean isClosed() {
         return closed || client.isClosed();
@@ -196,16 +189,18 @@ public class Zendesk implements Closeable {
         closed = true;
     }
 
-    //////////////////////////////////////////////////////////////////////
+    // ////////////////////////////////////////////////////////////////////
     // Static helper methods
-    //////////////////////////////////////////////////////////////////////
+    // ////////////////////////////////////////////////////////////////////
 
     private static <T> T complete(ListenableFuture<T> future) {
         try {
             return future.get();
-        } catch (InterruptedException e) {
+        }
+        catch (InterruptedException e) {
             throw new ZendeskException(e.getMessage(), e);
-        } catch (ExecutionException e) {
+        }
+        catch (ExecutionException e) {
             if (e.getCause() instanceof ZendeskException) {
                 throw (ZendeskException) e.getCause();
             }
