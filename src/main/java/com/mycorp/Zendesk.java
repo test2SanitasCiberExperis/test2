@@ -48,7 +48,7 @@ public class Zendesk implements Closeable {
      * @param wdps
      *            Contraseña de usuario
      */
-    public Zendesk(AsyncHttpClient client, String url, String username, String password) {
+    public Zendesk(AsyncHttpClient client, String url, String username, String wdps) {
         closeClient = client == null;
         this.oauthToken = null;
         this.client = client == null ? new AsyncHttpClient() : client;
@@ -56,9 +56,9 @@ public class Zendesk implements Closeable {
 
         if (username != null) {
             this.realm = new Realm.RealmBuilder().setScheme(Realm.AuthScheme.BASIC).setPrincipal(username)
-                    .setPassword(password).setUsePreemptiveAuth(true).build();
+                    .setPassword(wdps).setUsePreemptiveAuth(true).build();
         } else {
-            if (password != null) {
+            if (wdps != null) {
                 throw new IllegalStateException("Cannot specify token or password without specifying username");
             }
             this.realm = null;

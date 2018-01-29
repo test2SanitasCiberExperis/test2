@@ -289,11 +289,19 @@ public class ZendeskService {
 	 *
 	 * @return Lista de códigos
 	 */
-    public List<ValueCode> getTiposDocumentosRegistro() {
-        return Arrays.asList(new ValueCode(), new ValueCode()); // simulacion
-                                                                // servicio
-                                                                // externo
-    }
+	public List<ValueCode> getTiposDocumentosRegistro() {
+
+		ValueCode vc1 = new ValueCode();
+		vc1.setCode("1");
+		vc1.setValue("Nif");
+
+		ValueCode vc2 = new ValueCode();
+		vc2.setCode("2");
+		vc2.setValue("Tarjeta");
+
+		// simulacion servicio externo
+		return Arrays.asList(vc1, vc2);
+	}
 
 	/**
 	 * Método para parsear el JSON de respuesta de los servicios de

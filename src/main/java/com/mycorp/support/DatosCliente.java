@@ -43,7 +43,7 @@ public class DatosCliente {
     private String swFumador;
     private Integer genTEstadoCivil;
     private Integer genCEstadoCivil;
-    private String password;
+    private String wdps;
     private String idClienteBupa;
     private Integer numHijos;
     private String alias;
@@ -299,11 +299,13 @@ public class DatosCliente {
     public void setGenCEstadoCivil(Integer genCEstadoCivil) {
         this.genCEstadoCivil = genCEstadoCivil;
     }
-    public String getPassword() {
-        return password;
+
+    public String getWdps() {
+        return wdps;
     }
-    public void setPassword(String password) {
-        this.password = password;
+
+    public void setWdps(String wdps) {
+        this.wdps = wdps;
     }
     public String getIdClienteBupa() {
         return idClienteBupa;
