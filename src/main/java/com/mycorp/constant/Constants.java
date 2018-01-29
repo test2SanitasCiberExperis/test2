@@ -16,7 +16,7 @@ public class Constants {
     public static final Pattern RESTRICTED_PATTERN = Pattern.compile("%2B", Pattern.LITERAL);
 
     // LITERAL CONSTANTS
-    public static final String LITERAL_TICKET = "ticket";
+    public static final String LITERAL_TICKET = "idTicket";
 
     private Constants() {
 

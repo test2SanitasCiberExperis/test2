@@ -1,14 +1,14 @@
 package com.mycorp.support;
 
 public class Ticket {
-    String ticket;
+    String idTicket;
 
-    public String getTicket() {
-        return ticket;
+    public String getIdTicket() {
+        return idTicket;
     }
 
-    public void setTicket(String ticket) {
-        this.ticket = ticket;
+    public void setIdTicket(String idTicket) {
+        this.idTicket = idTicket;
     }
 
 }
