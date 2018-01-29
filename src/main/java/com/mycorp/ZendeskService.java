@@ -176,7 +176,7 @@ public class ZendeskService {
 
         }
         catch (Exception e) {
-            logger.error("Error al crear ticket ZENDESK");
+            logger.error("Error al crear ticket ZENDESK", e);
             // Send email
 
             CorreoElectronico correo = new CorreoElectronico(Long.parseLong(zendeskProperties
