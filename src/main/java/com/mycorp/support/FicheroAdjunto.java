@@ -1,16 +1,18 @@
-
 package com.mycorp.support;
 
 import java.io.Serializable;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for ficheroAdjunto complex type.
+ * <p>
+ * Java class for ficheroAdjunto complex type.
  *
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  *
  * <pre>
  * &lt;complexType name="ficheroAdjunto">
@@ -28,23 +30,17 @@ import javax.xml.bind.annotation.XmlType;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ficheroAdjunto", propOrder = {
-    "contenido",
-    "nombre"
-})
-public class FicheroAdjunto
-    implements Serializable
-{
+@XmlType(name = "ficheroAdjunto", propOrder = { "contenido", "nombre" })
+public class FicheroAdjunto implements Serializable {
 
+    private static final long serialVersionUID = -5537311813063789245L;
     protected byte[] contenido;
     protected String nombre;
 
     /**
      * Gets the value of the contenido property.
      *
-     * @return
-     *     possible object is
-     *     byte[]
+     * @return possible object is byte[]
      */
     public byte[] getContenido() {
         return contenido;
@@ -54,19 +50,16 @@ public class FicheroAdjunto
      * Sets the value of the contenido property.
      *
      * @param value
-     *     allowed object is
-     *     byte[]
+     *            allowed object is byte[]
      */
     public void setContenido(byte[] value) {
-        this.contenido = ((byte[]) value);
+        this.contenido = (byte[]) value;
     }
 
     /**
      * Gets the value of the nombre property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
+     * @return possible object is {@link String }
      *
      */
     public String getNombre() {
@@ -77,8 +70,7 @@ public class FicheroAdjunto
      * Sets the value of the nombre property.
      *
      * @param value
-     *     allowed object is
-     *     {@link String }
+     *            allowed object is {@link String }
      *
      */
     public void setNombre(String value) {

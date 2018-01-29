@@ -1,11 +1,12 @@
 package com.mycorp.support;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
-public class Poliza {
+public class Poliza implements Serializable {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -7697433318924093934L;
 
@@ -51,14 +52,14 @@ public class Poliza {
      * @param fieldsList
      *            the fields list
      */
-    public final void deserialize( final List< String > fieldsList ) {
+    public final void deserialize(final List<String> fieldsList) {
 
-        if( CollectionUtils.isNotEmpty( fieldsList ) && fieldsList.size() == MAX_ARG ) {
-            this.compania = NumberUtils.toInt( fieldsList.get( 0 ) );
-            this.numPoliza = NumberUtils.toInt( fieldsList.get( 1 ) );
-            this.numColectivo = NumberUtils.toInt( fieldsList.get( 2 ) );
+        if (CollectionUtils.isNotEmpty(fieldsList) && fieldsList.size() == MAX_ARG) {
+            this.compania = NumberUtils.toInt(fieldsList.get(0));
+            this.numPoliza = NumberUtils.toInt(fieldsList.get(1));
+            this.numColectivo = NumberUtils.toInt(fieldsList.get(2));
         } else {
-            throw new IllegalArgumentException( "El identificador de la Poliza no es correcto" );
+            throw new IllegalArgumentException("El identificador de la Poliza no es correcto");
         }
 
     }
@@ -78,7 +79,7 @@ public class Poliza {
      * @param idPoliza
      *            the new id poliza
      */
-    public final void setIdPoliza( String idPoliza ) {
+    public final void setIdPoliza(String idPoliza) {
         this.idPoliza = idPoliza;
     }
 
@@ -97,7 +98,7 @@ public class Poliza {
      * @param compania
      *            the new compania
      */
-    public final void setCompania( Integer compania ) {
+    public final void setCompania(Integer compania) {
         this.compania = compania;
     }
 
@@ -116,7 +117,7 @@ public class Poliza {
      * @param numPoliza
      *            the new num poliza
      */
-    public final void setNumPoliza( Integer numPoliza ) {
+    public final void setNumPoliza(Integer numPoliza) {
         this.numPoliza = numPoliza;
     }
 
@@ -135,7 +136,7 @@ public class Poliza {
      * @param numColectivo
      *            the new num colectivo
      */
-    public final void setNumColectivo( Integer numColectivo ) {
+    public final void setNumColectivo(Integer numColectivo) {
         this.numColectivo = numColectivo;
     }
 
@@ -154,7 +155,7 @@ public class Poliza {
      * @param planInfo
      *            the new plan info
      */
-    public final void setPlanInfo( ValueCode planInfo ) {
+    public final void setPlanInfo(ValueCode planInfo) {
         this.planInfo = planInfo;
     }
 
@@ -173,7 +174,7 @@ public class Poliza {
      * @param perfil
      *            the new perfil
      */
-    public final void setPerfil( String perfil ) {
+    public final void setPerfil(String perfil) {
         this.perfil = perfil;
     }
 
@@ -192,7 +193,7 @@ public class Poliza {
      * @param numTarjeta
      *            the new num tarjeta
      */
-    public final void setNumTarjeta( String numTarjeta ) {
+    public final void setNumTarjeta(String numTarjeta) {
         this.numTarjeta = numTarjeta;
     }
 
@@ -211,7 +212,7 @@ public class Poliza {
      * @param descBanco
      *            the new desc banco
      */
-    public final void setDescBanco( String descBanco ) {
+    public final void setDescBanco(String descBanco) {
         this.descBanco = descBanco;
     }
 
@@ -230,7 +231,7 @@ public class Poliza {
      * @param mostrarAsegPost
      *            the new mostrar aseg post
      */
-    public final void setMostrarAsegPost( Boolean mostrarAsegPost ) {
+    public final void setMostrarAsegPost(Boolean mostrarAsegPost) {
         this.mostrarAsegPost = mostrarAsegPost;
     }
 
@@ -249,7 +250,7 @@ public class Poliza {
      * @param reembolso
      *            the new reembolso
      */
-    public final void setReembolso( Boolean reembolso ) {
+    public final void setReembolso(Boolean reembolso) {
         this.reembolso = reembolso;
     }
 
@@ -261,9 +262,10 @@ public class Poliza {
     }
 
     /**
-     * @param copago the copago to set
+     * @param copago
+     *            the copago to set
      */
-    public void setCopago( boolean copago ) {
+    public void setCopago(boolean copago) {
         this.copago = copago;
     }
 }

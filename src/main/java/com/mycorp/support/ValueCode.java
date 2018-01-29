@@ -1,8 +1,8 @@
 package com.mycorp.support;
 
+import java.io.Serializable;
 
-
-public class ValueCode {
+public class ValueCode implements Serializable {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 5798796727044118127L;
 
@@ -27,7 +27,7 @@ public class ValueCode {
      * @param code
      *            the new code
      */
-    public final void setCode( String code ) {
+    public final void setCode(String code) {
         this.code = code;
     }
 
@@ -46,7 +46,7 @@ public class ValueCode {
      * @param value
      *            the new value
      */
-    public final void setValue( String value ) {
+    public final void setValue(String value) {
         this.value = value;
     }
 }
