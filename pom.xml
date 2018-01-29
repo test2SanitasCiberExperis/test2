@@ -31,6 +31,33 @@
         <artifactId>jacoco-maven-plugin</artifactId>
         <version>0.7.9</version>
       </plugin>
+		<plugin>
+			<groupId>org.jacoco</groupId>
+			<artifactId>jacoco-maven-plugin</artifactId>
+			<version>0.7.8</version>
+			<executions>
+				<execution>
+					<id>default-prepare-agent</id>
+					<goals>
+						<goal>prepare-agent</goal>
+					</goals>
+					<configuration>
+						<destFile>${project.build.directory}/jacoco.exec</destFile>
+					</configuration>
+				</execution>
+				<execution>
+					<id>default-report</id>
+					<phase>prepare-package</phase>
+					<goals>
+						<goal>report</goal>
+					</goals>
+					<configuration>
+						<!-- Sets the path to the file which contains the execution data. -->
+						<dataFile>${project.build.directory}/jacoco.exec</dataFile>
+					</configuration>
+				</execution>
+			</executions>
+		</plugin>
     </plugins>
   </build>
 
