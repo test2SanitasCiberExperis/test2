@@ -1,8 +1,6 @@
 package com.mycorp;
 
-
-
-public class ZendeskException  extends RuntimeException {
+public class ZendeskException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 
@@ -11,6 +9,7 @@ public class ZendeskException  extends RuntimeException {
     }
 
     public ZendeskException() {
+        super();
     }
 
     public ZendeskException(Throwable cause) {
